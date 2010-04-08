@@ -1,6 +1,10 @@
 = uri_geller
 
-Description goes here.
+UriGeller serializes chunks of data, crypts it with a key and decodes that stuff later.
+
+Its aim is to provide the possibility of data-exchane via get- or post-parameters. 
+
+(Highly inspired through grosser's url_store http://github.com/grosser)
 
 == Note on Patches/Pull Requests
  
