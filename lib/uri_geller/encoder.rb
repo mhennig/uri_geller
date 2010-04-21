@@ -15,7 +15,16 @@ module UriGeller
     end
     
     def compress(data)
-      CGI::escape(ActiveSupport::Base64.encode64(Zlib::Deflate.deflate(data)))
+      data = Zlib::Deflate.deflate(data, 1)
+      data = Base64.encode64(data).gsub("\n",'')
+      data = escape data
+
+      #escape Base64.encode64(Zlib::Deflate.deflate(data)).gsub("\n",'')
+      #CGI::escape(ActiveSupport::Base64.encode64(Zlib::Deflate.deflate(data)))
+    end
+    
+    def escape(data)
+      data.tr("+/=", "-_,")
     end
     
     def serialize(data)

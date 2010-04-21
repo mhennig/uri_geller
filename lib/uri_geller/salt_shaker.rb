@@ -22,7 +22,7 @@ module UriGeller
       end
     
       def hasher
-        @hasher ||= Digest::SHA2.new
+        @hasher ||= Digest::SHA1.new
       end
       
       def hash_length 

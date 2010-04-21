@@ -19,14 +19,20 @@ module UriGeller
     end
     
     private
-      def extract(chunk_of_data)
-        Zlib::Inflate.inflate(ActiveSupport::Base64.decode64(CGI::unescape(chunk_of_data)))
+      def extract(data)
+        data = unescape data
+        data = Base64.decode64 data
+        data = Zlib::Inflate.inflate data
       end
-    
-      def unserialize(chunk_of_data)
-        ActiveSupport::JSON.decode(chunk_of_data).symbolize_keys
+      
+      def unescape(soup)
+        soup.tr("-_,", "+/=")
       end
-    
+      
+      def unserialize(soup)
+        ActiveSupport::JSON.decode(soup).symbolize_keys
+      end
+      
       def decrypt(datasoup)
         @salt_shaker ||= SaltShaker.new(:salt => @secret)
         @salt_shaker.remove_salt(datasoup)
